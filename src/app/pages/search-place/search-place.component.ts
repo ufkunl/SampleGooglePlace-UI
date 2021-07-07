@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, SecurityContext} from '@angular/core';
 import {SearchPlaceService} from '../../services/search-place.service';
 import {SearchPlace} from '../models/SearchPlace';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search-place',
@@ -9,21 +10,45 @@ import {SearchPlace} from '../models/SearchPlace';
 })
 export class SearchPlaceComponent implements OnInit {
 
-  constructor(private searchPlaceService: SearchPlaceService) { }
+  constructor(private searchPlaceService: SearchPlaceService,
+              private sanitizer: DomSanitizer) { }
 
-  searchPlaceData: SearchPlace[];
+  searchPlaceData: SearchPlace[] = [];
+
+  page = 1;
+  pageSize = 5;
+  collectionSize = this.searchPlaceData.length;
+
+  mapUrl = 'https://www.google.com/maps/embed/v1/view\n' +
+    '  ?key=AIzaSyB2vmXQ-MvBH2F198x2SvujszQTujJrve4\n' +
+    '  &center=-33.8569,151.2152\n' +
+    '  &zoom=18\n' +
+    '  &maptype=satellite';
 
   ngOnInit(): void {
     this.getPlaces();
   }
 
   getPlaces() {
-    this.searchPlaceService.getPlaces('28.494483', '41.235270', '1000').subscribe((res: any) => {
+    this.searchPlaceService.getPlaces('41.235270', '28.494483', '1000').subscribe((res: any) => {
       if (res.success) {
-        console.log(res.data);
         this.searchPlaceData = res.data;
+        this.collectionSize = this.searchPlaceData.length;
       }
     });
+  }
+
+
+  showOnMaps() {
+    this.mapUrl = 'https://www.google.com/maps/embed/v1/view\n' +
+      '  ?key=AIzaSyB2vmXQ-MvBH2F198x2SvujszQTujJrve4\n' +
+      '  &center=-33.8569,151.2152\n' +
+      '  &zoom=18\n' +
+      '  &maptype=satellite';
+  }
+
+  mapUrlByPass() {
+    return this.sanitizer.sanitize(SecurityContext.URL, this.mapUrl);
   }
 
 }

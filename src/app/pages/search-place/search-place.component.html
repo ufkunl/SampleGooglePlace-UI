@@ -1,1 +1,54 @@
-<p>search-place works!</p>
+<div class="container mt-5 mb-5">
+  <div class="row m-10 ">
+    <div class="col-6">
+      <div class="card m-10">
+        <div class="card-header text-center">
+            <h3>Places List</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Latitude</th>
+              <th scope="col">Longitude</th>
+              <th scope="col">On/Off</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let searchPlace of searchPlaceData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i = index">
+              <th scope="row">{{ (pageSize*(page-1))+i+1}}</th>
+              <td>{{ searchPlace.name }}</td>
+              <td>{{ searchPlace.lat }}</td>
+              <td>{{ searchPlace.lng }}</td>
+              <td class="text-center">
+                <i class="bi bi-circle-fill" [ngClass]="searchPlace.nowOpen == null ? 'grey-status' : searchPlace.nowOpen ? 'green-status' : 'red-status'"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <ngb-pagination [collectionSize]="collectionSize"
+                          [(page)]="page"
+                          [pageSize]="pageSize">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <iframe
+        width="450"
+        height="250"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/view\n' +
+      '  ?key=AIzaSyB2vmXQ-MvBH2F198x2SvujszQTujJrve4\n' +
+      '  &center=-33.8569,151.2152\n' +
+      '  &zoom=18\n' +
+      '  &output=embed\n' +
+      '  &maptype=satellite"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>

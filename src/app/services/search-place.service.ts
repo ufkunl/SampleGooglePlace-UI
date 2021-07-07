@@ -10,7 +10,7 @@ export class SearchPlaceService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getPlaces(longitude, latitude, radius) {
+  getPlaces(latitude, longitude, radius) {
     // let params = new HttpParams();
     // params = params.append('longitude', longitude);
     // params = params.append('latitude', latitude);
