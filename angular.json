@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "workshop-web": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "workshop-web"
+    }
+  },
+  "defaultProject": "workshop-web",
+  "cli": {
+    "analytics": "ee5e15e5-e14e-49d3-bc86-c4754dddc530"
+  }
 }
