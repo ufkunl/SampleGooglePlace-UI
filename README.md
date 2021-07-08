@@ -12,3 +12,12 @@ The project is based on a web service which uses the following technologies:
 
 # Build and Run It
 After you download the project you can npm install and ng serve
+
+# Screen Shots
+![alt text](https://github.com/ufkunl/Workshop-UI/blob/master/Screenshot_1.png?raw=true)
+
+
+![alt text](https://github.com/ufkunl/Workshop-UI/blob/master/Screenshot_4.png?raw=true)
+
+
+![alt text](https://github.com/ufkunl/Workshop-UI/blob/master/Screenshot_5.png?raw=true)
