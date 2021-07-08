@@ -2,6 +2,9 @@ import {Component, OnInit, SecurityContext} from '@angular/core';
 import {SearchPlaceService} from '../../services/search-place.service';
 import {SearchPlace} from '../models/SearchPlace';
 import {DomSanitizer} from '@angular/platform-browser';
+import {SearchRequest} from '../models/SearchRequest';
+import {ToastrService} from 'ngx-toastr';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-search-place',
@@ -11,7 +14,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class SearchPlaceComponent implements OnInit {
 
   constructor(private searchPlaceService: SearchPlaceService,
-              private sanitizer: DomSanitizer) { }
+              private sanitizer: DomSanitizer,
+              private toastr: ToastrService) { }
 
   searchPlaceData: SearchPlace[] = [];
 
@@ -19,36 +23,34 @@ export class SearchPlaceComponent implements OnInit {
   pageSize = 5;
   collectionSize = this.searchPlaceData.length;
 
-  mapUrl = 'https://www.google.com/maps/embed/v1/view\n' +
-    '  ?key=AIzaSyB2vmXQ-MvBH2F198x2SvujszQTujJrve4\n' +
-    '  &center=-33.8569,151.2152\n' +
-    '  &zoom=18\n' +
-    '  &maptype=satellite';
+  request: SearchRequest = new SearchRequest();
 
   ngOnInit(): void {
-    this.getPlaces();
+    // this.getPlaces('41.235270', '28.494483', '1000');
   }
 
-  getPlaces() {
-    this.searchPlaceService.getPlaces('41.235270', '28.494483', '1000').subscribe((res: any) => {
+  getPlaces(request: SearchRequest) {
+    this.searchPlaceService.getPlaces(request.lat, request.lng, request.radius).subscribe((res: any) => {
       if (res.success) {
         this.searchPlaceData = res.data;
         this.collectionSize = this.searchPlaceData.length;
+        if (this.collectionSize === 0) {
+            this.toastr.error('Data not found !!!');
+        }
       }
     });
   }
 
-
-  showOnMaps() {
-    this.mapUrl = 'https://www.google.com/maps/embed/v1/view\n' +
-      '  ?key=AIzaSyB2vmXQ-MvBH2F198x2SvujszQTujJrve4\n' +
-      '  &center=-33.8569,151.2152\n' +
-      '  &zoom=18\n' +
-      '  &maptype=satellite';
-  }
-
-  mapUrlByPass() {
-    return this.sanitizer.sanitize(SecurityContext.URL, this.mapUrl);
-  }
+  // showOnMaps() {
+  //   this.mapUrl = 'https://www.google.com/maps/embed/v1/view\n' +
+  //     '  ?key=AIzaSyB2vmXQ-MvBH2F198x2SvujszQTujJrve4\n' +
+  //     '  &center=-33.8569,151.2152\n' +
+  //     '  &zoom=18\n' +
+  //     '  &maptype=satellite';
+  // }
+  //
+  // mapUrlByPass() {
+  //   return this.sanitizer.sanitize(SecurityContext.URL, this.mapUrl);
+  // }
 
 }

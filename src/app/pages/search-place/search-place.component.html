@@ -1,5 +1,33 @@
 <div class="container mt-5 mb-5">
-  <div class="row m-10 ">
+  <div class="mb-3">
+    <div class="card">
+      <div class="card-header text-center">
+        <h3>Search</h3>
+      </div>
+      <div class="card-body">
+        <form class="text-center border border-light">
+          <!-- Email -->
+          <div class="p-3">
+            <div class="row col-12">
+              <div class="col-4">
+                <input type="text" id="lantitude" [(ngModel)]="request.lat" class="form-control mb-4 col-3" placeholder="Lantitude" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="col-4">
+                <input type="text" id="longitude" [(ngModel)]="request.lng" class="form-control mb-4" placeholder="Longitude" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="col-4">
+                <input type="text" id="radius" [(ngModel)]="request.radius" class="form-control mb-4" placeholder="Radius" [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+            <div class="row col-12 p-lg-3">
+              <button class="btn btn-primary" type="button" (click)="getPlaces(request)">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row m-10" [hidden]="searchPlaceData.length == 0">
     <div class="col-6">
       <div class="card m-10">
         <div class="card-header text-center">
@@ -13,7 +41,7 @@
               <th scope="col">Name</th>
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
-              <th scope="col">On/Off</th>
+              <th scope="col">Open/Close</th>
             </tr>
             </thead>
             <tbody>
@@ -29,10 +57,7 @@
             </tbody>
           </table>
 
-          <ngb-pagination [collectionSize]="collectionSize"
-                          [(page)]="page"
-                          [pageSize]="pageSize">
-          </ngb-pagination>
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"></ngb-pagination>
         </div>
       </div>
     </div>
