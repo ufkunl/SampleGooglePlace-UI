@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-  <div class="row m-10" [hidden]="searchPlaceData.length == 0">
+  <div class="row m-10" [hidden]="searchPlaceData.length === 0">
     <div class="col-6">
       <div class="card m-10">
         <div class="card-header text-center">
@@ -62,18 +62,20 @@
       </div>
     </div>
     <div class="col-6">
-      <iframe
-        width="450"
-        height="250"
-        frameborder="0" style="border:0"
-        src="https://www.google.com/maps/embed/v1/view\n' +
-      '  ?key=AIzaSyB2vmXQ-MvBH2F198x2SvujszQTujJrve4\n' +
-      '  &center=-33.8569,151.2152\n' +
-      '  &zoom=18\n' +
-      '  &output=embed\n' +
-      '  &maptype=satellite"
-        allowfullscreen>
-      </iframe>
+      <agm-map
+        [latitude]= convertStringToNumber(request.lat)
+        [longitude]= convertStringToNumber(request.lng)
+        [zoom] = 15>
+        <agm-marker
+          *ngFor="let searchPlace of searchPlaceData"
+          [latitude]="searchPlace.lat"
+          [longitude]="searchPlace.lng">
+          <agm-info-window #infoWindow>
+            {{ searchPlace.name }}
+          </agm-info-window>
+        </agm-marker>
+
+      </agm-map>
     </div>
   </div>
 </div>

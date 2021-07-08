@@ -1,10 +1,9 @@
-import {Component, OnInit, SecurityContext} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SearchPlaceService} from '../../services/search-place.service';
-import {SearchPlace} from '../models/SearchPlace';
+import {SearchPlace} from '../../models/SearchPlace';
 import {DomSanitizer} from '@angular/platform-browser';
-import {SearchRequest} from '../models/SearchRequest';
+import {SearchRequest} from '../../models/SearchRequest';
 import {ToastrService} from 'ngx-toastr';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-search-place',
@@ -39,6 +38,10 @@ export class SearchPlaceComponent implements OnInit {
         }
       }
     });
+  }
+
+  convertStringToNumber(input: string) {
+    return Number(input);
   }
 
   // showOnMaps() {
